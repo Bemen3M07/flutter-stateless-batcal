@@ -10,7 +10,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       home: Scaffold(
         body: Center(
           child: Column(
@@ -23,7 +23,8 @@ class MainApp extends StatelessWidget {
                   print('Button Login Pressed');
                 },
                 child: const Text('Login'),
-              )
+              ),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   print('Button Register Pressed');
