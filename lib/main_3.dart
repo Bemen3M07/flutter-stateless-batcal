@@ -12,7 +12,16 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Text('Hello World 3!'),
+          child: Column(
+             mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('This is a resorce string'),
+              SizedBox(height: 20),
+              Image(
+                image: AssetImage('assets/images/foto.png'),
+              ),
+            ]
+        ),
         ),
       ),
     );
