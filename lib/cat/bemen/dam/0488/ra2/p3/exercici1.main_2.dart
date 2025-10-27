@@ -1,44 +1,44 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // Importa widgets de Flutter
 
-void main() {
-  runApp(const MainApp());
+void main() { // Función principal de la app
+  runApp(const MainApp()); // Inicia la aplicación Flutter
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatelessWidget { // Widget principal sin estado
   const MainApp({super.key});
 
 
   @override
-  Widget build(BuildContext context) {
-    return  MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+  Widget build(BuildContext context) { // Construye la interfaz
+    return  MaterialApp( // Configuración de la aplicación
+      home: Scaffold( // Estructura básica de pantalla
+        body: Center( // Centra el contenido
+          child: Column( // Columna vertical para organizar elementos
+            mainAxisAlignment: MainAxisAlignment.center, // Centra verticalmente
             children: [
-              const Text('Welcome!'),
-              const Text ('Start Learning Now'),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  print('Button Login Pressed');
+              const Text('Welcome!'), // Texto de bienvenida
+              const Text ('Start Learning Now'), // Texto motivacional
+              const SizedBox(height: 20), // Espaciado vertical
+              ElevatedButton( // Botón elevado de login
+                onPressed: () { // Función al presionar
+                  print('Button Login Pressed'); // Imprime mensaje en consola
                 },
-                style: ElevatedButton.styleFrom(
+                style: ElevatedButton.styleFrom( // Estilo del botón
                   backgroundColor: Colors.blue, // Color de fondo azul
                   foregroundColor: Colors.white, // Color del texto blanco
                 ),
-                child: const Text('Login'),
+                child: const Text('Login'), // Texto del botón
               ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  print('Button Register Pressed');
+              const SizedBox(height: 10), // Espaciado vertical menor
+              ElevatedButton( // Botón elevado de registro
+                onPressed: () { // Función al presionar
+                  print('Button Register Pressed'); // Imprime mensaje en consola
                 },
-                style: ElevatedButton.styleFrom(
+                style: ElevatedButton.styleFrom( // Estilo del botón
                   backgroundColor: Colors.blue, // Color de fondo azul
                   foregroundColor: Colors.white, // Color del texto blanco
                 ),
-                child: const Text('Register'),
+                child: const Text('Register'), // Texto del botón
               ),
             ],
           ),

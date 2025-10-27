@@ -1,44 +1,44 @@
-import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:flutter/material.dart'; // Importa widgets de Flutter
+import 'dart:math'; // Para generar números aleatorios
 
-class Message {
-  final String author;
-  final String body;
+class Message { // Clase para representar un mensaje
+  final String author; // Nombre del autor del mensaje
+  final String body; // Contenido del mensaje
 
-  Message(this.author, this.body);
+  Message(this.author, this.body); // Constructor de la clase
 }
 
-void main() {
-  runApp(const MyApp());
+void main() { // Función principal de la app
+  runApp(const MyApp()); // Inicia la aplicación Flutter
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget { // Widget principal sin estado
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Messages App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+  Widget build(BuildContext context) { // Construye la interfaz
+    return MaterialApp( // Configuración de la aplicación
+      title: 'Messages App', // Título de la aplicación
+      theme: ThemeData( // Tema visual de la app
+        primarySwatch: Colors.blue, // Color principal azul
       ),
-      home: const MessageListScreen(),
+      home: const MessageListScreen(), // Pantalla inicial
     );
   }
 }
 
-class MessageListScreen extends StatefulWidget {
+class MessageListScreen extends StatefulWidget { // Pantalla con estado mutable
   const MessageListScreen({super.key});
 
   @override
-  State<MessageListScreen> createState() => _MessageListScreenState();
+  State<MessageListScreen> createState() => _MessageListScreenState(); // Crea el estado
 }
 
 class _MessageListScreenState extends State<MessageListScreen> {
-  final ScrollController _scrollController = ScrollController();
-  final List<Message> _displayedMessages = [];
+  final ScrollController _scrollController = ScrollController(); // Controla el scroll de la lista
+  final List<Message> _displayedMessages = []; // Mensajes mostrados en pantalla
   
-  // Lista de nombres
+  // Lista de nombres predefinidos para los autores
   final names = [
     "Ellison Curry",
     "Briggs Willis",
@@ -64,117 +64,117 @@ class _MessageListScreenState extends State<MessageListScreen> {
     "Larry Shepherd",
   ];
 
-  // Cos del missatge
+  // Texto del mensaje (igual para todos)
   static const body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac vestibulum nunc.";
   
-  late List<Message> allMessages;
-  final random = Random();
+  late List<Message> allMessages; // Lista completa de todos los mensajes
+  final random = Random(); // Generador de números aleatorios
   
-  int _currentIndex = 0;
-  final int _itemsPerLoad = 10;
+  int _currentIndex = 0; // Índice actual de carga
+  final int _itemsPerLoad = 10; // Cuántos mensajes cargar cada vez
 
   @override
-  void initState() {
+  void initState() { // Se ejecuta cuando se crea el widget
     super.initState();
     
-    // Generar 100 missatges
+    // Genera 100 mensajes con autores aleatorios
     allMessages = List.generate(100, (index) {
       return Message(
-        names[random.nextInt(names.length)],
-        body,
+        names[random.nextInt(names.length)], // Selecciona autor aleatorio
+        body, // Usa el mismo texto para todos
       );
     });
     
-    // Carregar els primers missatges
+    // Carga los primeros mensajes
     _loadMoreMessages();
     
-    // Listener per al scroll infinit
+    // Escucha cuando el usuario hace scroll
     _scrollController.addListener(_scrollListener);
   }
 
-  void _scrollListener() {
+  void _scrollListener() { // Detecta cuando llegar cerca del final
     if (_scrollController.position.pixels >= 
         _scrollController.position.maxScrollExtent - 200) {
-      _loadMoreMessages();
+      _loadMoreMessages(); // Carga más mensajes
     }
   }
 
-  void _loadMoreMessages() {
-    if (_currentIndex < allMessages.length) {
-      setState(() {
+  void _loadMoreMessages() { // Carga más mensajes en la lista
+    if (_currentIndex < allMessages.length) { // Si quedan mensajes por cargar
+      setState(() { // Actualiza la interfaz
         final endIndex = (_currentIndex + _itemsPerLoad < allMessages.length) 
             ? _currentIndex + _itemsPerLoad 
-            : allMessages.length;
+            : allMessages.length; // Calcula hasta dónde cargar
         
-        _displayedMessages.addAll(
+        _displayedMessages.addAll( // Añade mensajes a la lista mostrada
           allMessages.sublist(_currentIndex, endIndex)
         );
-        _currentIndex = endIndex;
+        _currentIndex = endIndex; // Actualiza el índice actual
       });
       
-      print('Cargados ${_displayedMessages.length} de ${allMessages.length} mensajes');
+      print('Cargados ${_displayedMessages.length} de ${allMessages.length} mensajes'); // Debug
     }
   }
 
   @override
-  void dispose() {
-    _scrollController.dispose();
+  void dispose() { // Limpia recursos al destruir el widget
+    _scrollController.dispose(); // Libera el controlador de scroll
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFFAFAFA),
-      body: ListView.builder(
-        controller: _scrollController,
-        padding: const EdgeInsets.all(16.0),
-        itemCount: _displayedMessages.length + 1,
-        itemBuilder: (context, index) {
-          if (index < _displayedMessages.length) {
-            return _buildMessageCard(_displayedMessages[index]);
-          } else {
-            return _currentIndex < allMessages.length
-                ? const Padding(
+  Widget build(BuildContext context) { // Construye la interfaz de usuario
+    return Scaffold( // Estructura básica de pantalla Flutter
+      backgroundColor: const Color(0xFFFAFAFA), // Color de fondo gris claro
+      body: ListView.builder( // Lista scrolleable que construye elementos dinámicamente
+        controller: _scrollController, // Controlador para detectar scroll
+        padding: const EdgeInsets.all(16.0), // Espaciado alrededor de la lista
+        itemCount: _displayedMessages.length + 1, // +1 para el indicador de carga
+        itemBuilder: (context, index) { // Función que construye cada elemento
+          if (index < _displayedMessages.length) { // Si es un mensaje normal
+            return _buildMessageCard(_displayedMessages[index]); // Construye tarjeta de mensaje
+          } else { // Si es el último elemento (indicador de carga)
+            return _currentIndex < allMessages.length // Si quedan mensajes por cargar
+                ? const Padding( // Muestra indicador de carga giratorio
                     padding: EdgeInsets.all(16.0),
                     child: Center(child: CircularProgressIndicator()),
                   )
-                : const SizedBox.shrink();
+                : const SizedBox.shrink(); // No muestra nada si ya cargó todo
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton( // Botón circular flotante
         onPressed: () {
-          // Sense funcionalitat
+          // Sin funcionalidad (vacío)
         },
-        backgroundColor: const Color(0xFF007bff),
-        child: const Icon(Icons.add, color: Colors.white),
+        backgroundColor: const Color(0xFF007bff), // Color azul
+        child: const Icon(Icons.add, color: Colors.white), // Icono + blanco
       ),
     );
   }
 
-  Widget _buildMessageCard(Message message) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFFE0E0E0),
-        borderRadius: BorderRadius.circular(12),
+  Widget _buildMessageCard(Message message) { // Función que construye una tarjeta de mensaje
+    return Container( // Contenedor principal de la tarjeta
+      margin: const EdgeInsets.only(bottom: 10), // Margen inferior entre tarjetas
+      padding: const EdgeInsets.all(16), // Espaciado interno de la tarjeta
+      decoration: BoxDecoration( // Decoración visual de la tarjeta
+        color: const Color(0xFFE0E0E0), // Color de fondo gris claro
+        borderRadius: BorderRadius.circular(12), // Bordes redondeados
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column( // Columna vertical para organizar contenido
+        crossAxisAlignment: CrossAxisAlignment.start, // Alineación a la izquierda
         children: [
-          Text(
+          Text( // Texto del nombre del autor
             message.author,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+            style: const TextStyle( // Estilo del texto del autor
+              fontSize: 18, // Tamaño de fuente
+              fontWeight: FontWeight.bold, // Texto en negrita
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
+          const SizedBox(height: 8), // Espaciado vertical entre autor y mensaje
+          Text( // Texto del contenido del mensaje
             message.body,
-            style: const TextStyle(fontSize: 14),
+            style: const TextStyle(fontSize: 14), // Tamaño de fuente normal
           ),
         ],
       ),
