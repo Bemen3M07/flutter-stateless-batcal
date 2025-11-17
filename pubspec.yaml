@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  provider: ^6.0.5
+  flutter_svg: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -19,3 +21,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/images/diceroller/
