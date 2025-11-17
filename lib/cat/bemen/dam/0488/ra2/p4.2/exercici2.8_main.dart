@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 1. IMPORTACIONES DE LOS EJERCICIOS
-import 'exercici2.2_main1.dart'; 
-import 'exercici2.4_main1.dart'; 
-import 'exercici2.6_main1.dart'; 
+import 'exercici2.2_main.dart'; 
+import 'exercici2.4_main.dart'; 
+import 'exercici2.6_main.dart'; 
 // import '../p3/exercici1.main_1.dart'; 
 
 // 2. LÓGICA DE ESTADO (Provider Integrado)
