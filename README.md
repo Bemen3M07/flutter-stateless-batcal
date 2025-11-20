@@ -35,6 +35,6 @@ Resultados ejercicio 2.6: Lista de la compra con controladores para “Nombre”
 Resultado ejercicio 2.7: Pagina donde tenemos un contador, le damos clicks y cuando cambiamos a otra pagina y volvemos a la misma del contador, el contador se mantiene con los clicks que hemos dado anteriormente, he añadido la dependencia providers he creado las 3 paginas y un home_screen.
 ![alt text](image-9.png)
 
-Resultado ejercicio 2.8: Pagina que cambia entre los ejercicios, pero no funciona, no cambia entre los ficheros creados, de todas formas muestro resultado de lo que muestra el fichero:
-
+Resultado ejercicio 2.8: Pagina que cambia entre los ejercicios, pero no funciona, no cambia entre los ficheros creados, de todas formas muestro resultado de lo que muestra el fichero.
+![alt text](image-10.png)  /  ![alt text](image-11.png)
 
