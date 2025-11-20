@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:math'; // Necesario para generar números aleatorios
 
+// --- AÑADIDO: Función main para poder ejecutar la app ---
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false, // Opcional: quita la etiqueta "Debug"
+    home: DiceRollerApp(),
+  ));
+}
+// --------------------------------------------------------
+
 class DiceRollerApp extends StatefulWidget {
   const DiceRollerApp({super.key});
 
@@ -17,6 +26,7 @@ class _DiceRollerAppState extends State<DiceRollerApp> {
   final Random _random = Random();
 
   // Mapa de imágenes: Asocia el número con la ruta del archivo PNG
+  // Asegúrate de que estos nombres coinciden EXACTAMENTE con tus archivos en assets/images/
   final Map<int, String> _imagenesDados = {
     1: 'assets/images/uno.png',
     2: 'assets/images/dos.png',
@@ -72,6 +82,13 @@ class _DiceRollerAppState extends State<DiceRollerApp> {
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
                   color: Colors.redAccent, // Color similar a la imagen
+                  shadows: [
+                    Shadow(
+                      offset: Offset(2.0, 2.0),
+                      blurRadius: 3.0,
+                      color: Colors.black,
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 40),
@@ -80,9 +97,20 @@ class _DiceRollerAppState extends State<DiceRollerApp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(_imagenesDados[_dado1]!, width: 120, height: 120),
+                  // Usamos un contenedor con sombra para que los dados resalten sobre el tapete
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 10, offset: Offset(5, 5))]
+                    ),
+                    child: Image.asset(_imagenesDados[_dado1]!, width: 120, height: 120),
+                  ),
                   const SizedBox(width: 30),
-                  Image.asset(_imagenesDados[_dado2]!, width: 120, height: 120),
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 10, offset: Offset(5, 5))]
+                    ),
+                    child: Image.asset(_imagenesDados[_dado2]!, width: 120, height: 120),
+                  ),
                 ],
               ),
               const SizedBox(height: 60),
