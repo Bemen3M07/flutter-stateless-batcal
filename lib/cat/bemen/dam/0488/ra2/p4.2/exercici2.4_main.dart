@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'dart:math';
-
-void main() {
-  runApp(const MaterialApp(home: DiceRollerApp()));
-}
+import 'dart:math'; // Necesario para generar números aleatorios
 
 class DiceRollerApp extends StatefulWidget {
   const DiceRollerApp({super.key});
@@ -14,121 +9,102 @@ class DiceRollerApp extends StatefulWidget {
 }
 
 class _DiceRollerAppState extends State<DiceRollerApp> {
-  // Estado inicial de los dados (mostrando 1)
-  int _dice1Number = 1;
-  int _dice2Number = 1;
+  // Estado: valor de los dos dados (inician en 1)
+  int _dado1 = 1;
+  int _dado2 = 1;
+
+  // Generador de aleatorios
   final Random _random = Random();
 
-  void _rollDice() {
-    // Generar números aleatorios entre 1 y 6
-    int newDice1 = _random.nextInt(6) + 1;
-    int newDice2 = _random.nextInt(6) + 1;
+  // Mapa de imágenes: Asocia el número con la ruta del archivo PNG
+  final Map<int, String> _imagenesDados = {
+    1: 'assets/images/uno.png',
+    2: 'assets/images/dos.png',
+    3: 'assets/images/tres.png',
+    4: 'assets/images/cuatro.png',
+    5: 'assets/images/cinco.png',
+    6: 'assets/images/seis.png',
+  };
 
-    // Actualizar el estado para redibujar los daus
+  // Función para lanzar los dados
+  void _lanzarDados() {
+    // 1. Generar números del 1 al 6
+    int nuevoDado1 = _random.nextInt(6) + 1;
+    int nuevoDado2 = _random.nextInt(6) + 1;
+
+    // 2. Actualizar el estado para cambiar las imágenes
     setState(() {
-      _dice1Number = newDice1;
-      _dice2Number = newDice2;
+      _dado1 = nuevoDado1;
+      _dado2 = nuevoDado2;
     });
 
-    // Comprobar el JACKPOT
-    if (newDice1 == 6 && newDice2 == 6) {
-      _showJackpotMessage();
-    }
-  }
-
-  // Muestra un SnackBar (Toast) para el JACKPOT
-  void _showJackpotMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text(
-          '¡JACKPOT! Has tret dos 6!',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    // 3. Comprobar si hay JACKPOT (Doble 6)
+    if (nuevoDado1 == 6 && nuevoDado2 == 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('¡JACKPOT! Doble seis', textAlign: TextAlign.center),
+          backgroundColor: Colors.amber,
+          duration: Duration(seconds: 2),
         ),
-        backgroundColor: Colors.red.shade700,
-        duration: const Duration(seconds: 3),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
-
-  // Genera la ruta al archivo SVG basado en el número
-  String _getDiceImagePath(int number) {
-    // RUTA AJUSTADA a tu estructura: assets/images/diceroller/
-    return 'assets/images/diceroller/dice_$number.svg';
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Fons de pantalla (tapestry.png)
       body: Container(
+        // Fondo de pantalla (Tapestry)
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/diceroller/tapestry.png'),
+            image: AssetImage('assets/images/tapestry.png'),
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            // TÍTULO: "Gambling" y Icona
-            Column(
-              children: [
-                Image.asset(
-                  'assets/images/diceroller/dicerollericon.jpg',
-                  height: 120,
-                  width: 120,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Título
+              const Text(
+                'Gambling',
+                style: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.redAccent, // Color similar a la imagen
                 ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Gambling',
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
-                  ),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 40),
 
-            // Daus (Die 1 i Die 2)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                // Dau 1 (SVG)
-                SvgPicture.asset(
-                  _getDiceImagePath(_dice1Number),
-                  height: 150,
-                  width: 150,
-                ),
-                const SizedBox(width: 20),
-                // Dau 2 (SVG)
-                SvgPicture.asset(
-                  _getDiceImagePath(_dice2Number),
-                  height: 150,
-                  width: 150,
-                ),
-              ],
-            ),
+              // Fila con los dos dados
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(_imagenesDados[_dado1]!, width: 120, height: 120),
+                  const SizedBox(width: 30),
+                  Image.asset(_imagenesDados[_dado2]!, width: 120, height: 120),
+                ],
+              ),
+              const SizedBox(height: 60),
 
-            // BOTÓ "ROLL THE DICE"
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0),
-              child: ElevatedButton(
-                onPressed: _rollDice,
+              // Botón "ROLL THE DICE"
+              ElevatedButton(
+                onPressed: _lanzarDados,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF3F51B5),
+                  backgroundColor: const Color(0xFF3F51B5), // Azul oscuro
                   foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 60),
-                  shape: const RoundedRectangleBorder(),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 child: const Text(
                   'ROLL THE DICE',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
