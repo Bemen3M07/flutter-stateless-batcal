@@ -1,54 +1,54 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // Paquete base de widgets
 
-void main() {
-  runApp(const MyApp());
+void main() { // Punto de entrada
+  runApp(const MyApp()); // Lanza la app raíz
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget { // Widget sin estado
+  const MyApp({super.key}); // Constructor constante
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // Configura la app
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ScoreBoard(),
+      debugShowCheckedModeBanner: false, // Oculta etiqueta debug
+      home: ScoreBoard(), // Pantalla inicial
     );
   }
 }
 
-class ScoreBoard extends StatefulWidget {
+class ScoreBoard extends StatefulWidget { // Widget con estado
   @override
-  State<ScoreBoard> createState() => _ScoreBoardState();
+  State<ScoreBoard> createState() => _ScoreBoardState(); // Crea el estado
 }
 
-class _ScoreBoardState extends State<ScoreBoard> {
-  int scoreLeft = 0;
-  int scoreRight = 0;
+class _ScoreBoardState extends State<ScoreBoard> { // Estado mutable
+  int scoreLeft = 0; // Marcador lado izquierdo
+  int scoreRight = 0; // Marcador lado derecho
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // Dibuja la UI
     return Scaffold(
-      body: SafeArea(
+      body: SafeArea( // Evita zonas no seguras
         child: Column(
           children: [
             // --- PART SUPERIOR: MARCADOR ---
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Espacio uniforme
               children: [
                 Text(
-                  "$scoreLeft",
+                  "$scoreLeft", // Muestra marcador izquierdo
                   style: const TextStyle(
                       fontSize: 30, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "$scoreRight",
+                  "$scoreRight", // Muestra marcador derecho
                   style: const TextStyle(
                       fontSize: 30, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 40), // Separación vertical
 
             // --- BOTONS SCORE ---
             Row(
@@ -56,20 +56,20 @@ class _ScoreBoardState extends State<ScoreBoard> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    setState(() => scoreLeft++);
+                    setState(() => scoreLeft++); // Incrementa izquierda
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF465A7C),
+                    backgroundColor: const Color(0xFF465A7C), // Color base
                     padding:
                         const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                    shape: const StadiumBorder(),
+                    shape: const StadiumBorder(), // Bordes redondeados
                   ),
                   child: const Text("Score",
                       style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    setState(() => scoreRight++);
+                    setState(() => scoreRight++); // Incrementa derecha
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF465A7C),

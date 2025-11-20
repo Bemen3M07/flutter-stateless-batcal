@@ -1,79 +1,79 @@
-import 'dart:math';
-import 'package:flutter/material.dart';
+import 'dart:math'; // Biblioteca para números aleatorios
+import 'package:flutter/material.dart'; // Widgets básicos de Flutter
 
 // Exercici 2.3: Aplicació per endevinar un número PRIMERA VERSIÓ
 
-void main() {
-  runApp(MyApp());
+void main() { // Punto de entrada
+  runApp(MyApp()); // Lanza la app principal
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget { // Widget raíz sin estado
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // Configura MaterialApp
     return MaterialApp(
-      home: GuessNumberPage(),
+      home: GuessNumberPage(), // Pantalla inicial
     );
   }
 }
 
-class GuessNumberPage extends StatefulWidget {
+class GuessNumberPage extends StatefulWidget { // Pantalla con estado
   @override
-  _GuessNumberPageState createState() => _GuessNumberPageState();
+  _GuessNumberPageState createState() => _GuessNumberPageState(); // Crea estado
 }
 
-class _GuessNumberPageState extends State<GuessNumberPage> {
-  final TextEditingController _controller = TextEditingController();
-  int randomNumber = Random().nextInt(101); // Número entre 0 i 100
-  String message = "";
+class _GuessNumberPageState extends State<GuessNumberPage> { // Lógica interactiva
+  final TextEditingController _controller = TextEditingController(); // Lee el input
+  int randomNumber = Random().nextInt(101); // Número entre 0 y 100
+  String message = ""; // Texto de feedback
 
-  void checkNumber() {
-    int? userNumber = int.tryParse(_controller.text);
+  void checkNumber() { // Valida el número del usuario
+    int? userNumber = int.tryParse(_controller.text); // Convierte texto a int
 
-    if (userNumber == null) {
+    if (userNumber == null) { // Caso de entrada inválida
       setState(() {
-        message = "Introdueix un número vàlid.";
+        message = "Introdueix un número vàlid."; // Mensaje de error
       });
-      return;
+      return; // Sale sin comparar
     }
 
-    if (userNumber < randomNumber) {
+    if (userNumber < randomNumber) { // Usuario menor que objetivo
       setState(() {
-        message = "El número que busques és més gran";
+        message = "El número que busques és més gran"; // Indica subir
       });
-    } else if (userNumber > randomNumber) {
+    } else if (userNumber > randomNumber) { // Usuario mayor
       setState(() {
-        message = "El número que busques és més petit";
+        message = "El número que busques és més petit"; // Indica bajar
       });
     } else {
       setState(() {
-        message = "Has encertat!";
+        message = "Has encertat!"; // Acierto
       });
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // Dibuja la interfaz
     return Scaffold(
-      appBar: AppBar(title: Text("Endevina el número")),
+      appBar: AppBar(title: Text("Endevina el número")), // Barra superior
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0), // Margen uniforme
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center, // Centra verticalmente
           children: [
             TextField(
-              controller: _controller,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: "Introdueix el número"),
+              controller: _controller, // Enlaza con input
+              keyboardType: TextInputType.number, // Abre teclado numérico
+              decoration: InputDecoration(labelText: "Introdueix el número"), // Etiqueta
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20), // Espacio antes del botón
             ElevatedButton(
-              onPressed: checkNumber,
+              onPressed: checkNumber, // Ejecuta validación
               child: Text("Comprovar"),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20), // Espacio antes del mensaje
             Text(
-              message,
-              style: TextStyle(fontSize: 22),
+              message, // Muestra resultado
+              style: TextStyle(fontSize: 22), // Fuente grande
             ),
           ],
         ),
