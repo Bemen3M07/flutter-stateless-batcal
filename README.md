@@ -32,5 +32,9 @@ Resultados ejercicio 2.5: Marcador simple con dos contadores (scoreLeft, scoreRi
 Resultados ejercicio 2.6: Lista de la compra con controladores para “Nombre” y “Cantidad”. _agregarArticulo valida y añade instancias de ArticuloCompra a una lista ListView.builder, mostrando cada artículo en una tarjeta. Esto produce la vista de formulario + lista observada.
 ![alt text](image-8.png)
 
+Resultado ejercicio 2.7: Pagina donde tenemos un contador, le damos clicks y cuando cambiamos a otra pagina y volvemos a la misma del contador, el contador se mantiene con los clicks que hemos dado anteriormente, he añadido la dependencia providers he creado las 3 paginas y un home_screen.
+![alt text](image-9.png)
+
+Resultado ejercicio 2.8: Pagina que cambia entre los ejercicios, pero no funciona, no cambia entre los ficheros creados, de todas formas muestro resultado de lo que muestra el fichero:
 
 
